@@ -20,6 +20,12 @@ for (const file of commandFiles) {
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
 	console.log('Ready!');
+    client.user.setPresence({
+        activities: [{ 
+            name: `We've goat slash (/) commands!`,
+            type: `PLAYING`
+        }]
+    })
 });
 
 client.on('interactionCreate', async interaction => {

@@ -13,7 +13,7 @@ images = fs.readdirSync('./bin/audio');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('goats')
-		.setDescription('Plays goat noises!'),
+		.setDescription('Plays goat audio!'),
 	async execute(interaction) {
 
         console.log(interaction.member.voice.channel);
@@ -41,7 +41,7 @@ module.exports = {
             interaction.reply("BAAA!");
         }
         else {
-            interaction.reply("baaa...");
+            interaction.reply("You can't hear me, baaa...");
         }
 	},
 };
