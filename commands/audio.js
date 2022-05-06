@@ -28,17 +28,6 @@ module.exports = {
                 guildId: interaction.guildId,
                 adapterCreator: interaction.guild.voiceAdapterCreator,
             });
-            /**
-             * OLD FUNCTIONALITY
-             */
-            // const resource = createAudioResource('./bin/audio/attackedByGoats.mp3');
-    
-            // const player = createAudioPlayer();
-            // player.play(resource);
-            
-            /**
-             * NEW FUNCTIONALITY
-             */
 
             ytlink = interaction.options.getString('link');
 
@@ -59,7 +48,7 @@ module.exports = {
     
             connection.subscribe(player);
 
-            interaction.reply("Playing YouTube video")
+            interaction.reply("Now playing " + interaction.options.getString('link'))
         }
         else {
             interaction.reply("Join a voice channel first");
