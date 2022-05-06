@@ -4,7 +4,7 @@ const { Routes } = require('discord-api-types/v9');
 require('dotenv').config();
 token = process.env.token;
 clientID = process.env.client;
-guildID = process.env.guild1;
+guildID = process.env.guild;
 
 const commands = []
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));

@@ -1,5 +1,6 @@
 const { Client } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const ytdl = require('ytdl-core');
 const {
 	AudioPlayerStatus,
 	StreamType,
@@ -12,8 +13,12 @@ images = fs.readdirSync('./bin/audio');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('goats')
-		.setDescription('Plays goat audio!'),
+		.setName('play')
+		.setDescription('Plays YouTube audio!')
+        .addStringOption(option =>
+            option.setName('link')
+            .setDescription('The link of the YouTube video')
+            .setRequired(true)),
 	async execute(interaction) {
 
         console.log(interaction.member.voice.channel);
@@ -23,11 +28,27 @@ module.exports = {
                 guildId: interaction.guildId,
                 adapterCreator: interaction.guild.voiceAdapterCreator,
             });
-            const resource = createAudioResource('./bin/audio/attackedByGoats.mp3');
+            /**
+             * OLD FUNCTIONALITY
+             */
+            // const resource = createAudioResource('./bin/audio/attackedByGoats.mp3');
     
-            const player = createAudioPlayer();
-            player.play(resource);
+            // const player = createAudioPlayer();
+            // player.play(resource);
             
+            /**
+             * NEW FUNCTIONALITY
+             */
+
+            ytlink = interaction.options.getString('link');
+
+            const stream = ytdl(ytlink, { filter: 'audioonly' });
+            const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
+            const player = createAudioPlayer();
+
+            player.play(resource)
+            connection.subscribe(player)
+
             player.on('error', error => {
                 console.error(error);
             });
@@ -37,11 +58,11 @@ module.exports = {
             })
     
             connection.subscribe(player);
-    
-            interaction.reply("BAAA!");
+
+            interaction.reply("Playing YouTube video")
         }
         else {
-            interaction.reply("You can't hear me, baaa...");
+            interaction.reply("Join a voice channel first");
         }
 	},
 };

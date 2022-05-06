@@ -22,7 +22,7 @@ client.once('ready', () => {
 	console.log('Ready!');
     client.user.setPresence({
         activities: [{ 
-            name: `We've goat slash (/) commands!`,
+            name: `/help`,
             type: `PLAYING`
         }]
     })
